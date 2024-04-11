@@ -9,7 +9,6 @@
 <h1>New Year Countdown</h1>
 <div id="countdown"></div>
 <script>
-// Odliczanie sylwestrowe
 function countdown() {
     var countdownElement = document.getElementById("countdown");
     var count = 10;
@@ -28,8 +27,6 @@ countdown();
 </html> -->
 
 
-<!-- Funkcja obliczająca silnię:  -->
-
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +40,7 @@ countdown();
 <button onclick="calculateFactorial()">Calculate Factorial</button>
 <p id="result"></p>
 <script>
-// Funkcja obliczająca silnię
+// Funkcja obliczajaca silnie
 function calculateFactorial() {
     var number = parseInt(document.getElementById("number").value);
     var result = 1;
@@ -61,10 +58,29 @@ function calculateFactorial() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age Verification</title>
-<script>
-// Funkcja weryfikująca wiek użytkownika
-function checkAge() {
+<title>JavaScript Tasks</title>
+<style>
+
+    .button {
+        margin: 5px;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body onload="checkAgeOnLoad()">
+
+<h1>JavaScript Tasks</h1>
+
+<!-- <script>
+function checkAgeOnLoad() {
     var age = parseInt(prompt("Please enter your age:"));
     if (age >= 18) {
         window.location.href = "adult_page.html";
@@ -72,9 +88,107 @@ function checkAge() {
         window.location.href = "child_page.html";
     }
 }
+</script> -->
+
+<div>
+    <button class="button" onclick="changeColor(this)">Button 1</button>
+    <button class="button" onclick="changeColor(this)">Button 2</button>
+    <button class="button" onclick="changeColor(this)">Button 3</button>
+</div>
+<script>
+function changeColor(button) {
+    var buttons = document.getElementsByClassName("button");
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.backgroundColor = ""; 
+    }
+    button.style.backgroundColor = "yellow";
+}
 </script>
-</head>
-<body>
-<button onclick="checkAge()">Verify Age</button>
+
+<div>
+    <button class="button" onclick="toggleVisibility('elementId')">Toggle Visibility</button>
+    <div id="elementId">Some text here</div>
+</div>
+<script>
+function toggleVisibility(elementId) {
+    var element = document.getElementById(elementId);
+    if (element.style.display === "none") {
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
+}
+</script>
+
+<div>
+    <input type="text" id="textInput" placeholder="Enter text">
+    <button class="button" onclick="addToTextList()">Add to List</button>
+    <ul id="textList"></ul>
+</div>
+<script>
+function addToTextList() {
+    var input = document.getElementById("textInput");
+    var text = input.value;
+    var list = document.getElementById("textList");
+    var listItem = document.createElement("li");
+    listItem.textContent = text;
+    list.appendChild(listItem);
+}
+</script>
+
+<div>
+    <h2>Celsius to Fahrenheit Converter</h2>
+    <input type="number" id="celsiusInput" placeholder="Enter Celsius temperature">
+    <button class="button" onclick="convertToFahrenheit()">Convert to Fahrenheit</button>
+    <p id="fahrenheitResult"></p>
+</div>
+<div>
+    <h2>Fahrenheit to Celsius Converter</h2>
+    <input type="number" id="fahrenheitInput" placeholder="Enter Fahrenheit temperature">
+    <button class="button" onclick="convertToCelsius()">Convert to Celsius</button>
+    <p id="celsiusResult"></p>
+</div>
+<script>
+function convertToFahrenheit() {
+    var celsius = parseFloat(document.getElementById("celsiusInput").value);
+    var fahrenheit = (celsius * 9/5) + 32;
+    document.getElementById("fahrenheitResult").textContent = celsius + "°C is " + fahrenheit + "°F";
+}
+
+function convertToCelsius() {
+    var fahrenheit = parseFloat(document.getElementById("fahrenheitInput").value);
+    var celsius = (fahrenheit - 32) * 5/9;
+    document.getElementById("celsiusResult").textContent = fahrenheit + "°F is " + celsius + "°C";
+}
+</script>
+
+<div>
+    <input type="text" id="firstNameInput" placeholder="Enter first name">
+    <input type="text" id="lastNameInput" placeholder="Enter last name">
+    <button class="button" onclick="addToTable()">Add to Table</button>
+    <button class="button" onclick="clearFields()">Clear Fields</button>
+</div>
+<table id="nameTable">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+    </thead>
+    <tbody id="nameTableBody"></tbody>
+</table>
+
+<div>
+    <h2>Celsius to Fahrenheit Converter</h2>
+    <input type="number" id="celsiusInput" placeholder="Enter Celsius temperature">
+    <button class="button" onclick="convertTemperature()">Convert to Fahrenheit</button>
+    <p id="conversionResult"></p>
+    <h2>Fahrenheit to Celsius Converter</h2>
+    <input type="number" id="fahrenheitInput" placeholder="Enter Fahrenheit temperature">
+    <button class="button" onclick="convertTemperature(true)">Convert to Celsius</button>
+    <p id="reverseConversionResult"></p>
+</div>
+
+
 </body>
-</html> 
+</html>
