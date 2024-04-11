@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Year Countdown</title>
+</head>
+<body>
+<h1>New Year Countdown</h1>
+<div id="countdown"></div>
+<script>
+// Odliczanie sylwestrowe
+function countdown() {
+    var countdownElement = document.getElementById("countdown");
+    var count = 10;
+    var timer = setInterval(function() {
+        countdownElement.textContent = count;
+        count--;
+        if (count < 0) {
+            clearInterval(timer);
+            countdownElement.textContent = "Happy New Year!";
+        }
+    }, 1000);
+}
+countdown();
+</script>
+</body>
+</html>
+<!-- 
+Funkcja obliczająca silnię:
+html
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factorial Calculator</title>
+</head>
+<body>
+<h1>Factorial Calculator</h1>
+<input type="number" id="number" placeholder="Enter a number">
+<button onclick="calculateFactorial()">Calculate Factorial</button>
+<p id="result"></p>
+<script>
+// Funkcja obliczająca silnię
+function calculateFactorial() {
+    var number = parseInt(document.getElementById("number").value);
+    var result = 1;
+    for (var i = 2; i <= number; i++) {
+        result *= i;
+    }
+    document.getElementById("result").textContent = "Factorial of " + number + " is: " + result;
+}
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Verification</title>
+<script>
+// Funkcja weryfikująca wiek użytkownika
+function checkAge() {
+    var age = parseInt(prompt("Please enter your age:"));
+    if (age >= 18) {
+        window.location.href = "adult_page.html";
+    } else {
+        window.location.href = "child_page.html";
+    }
+}
+</script>
+</head>
+<body>
+<button onclick="checkAge()">Verify Age</button>
+</body>
+</html> -->
