@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+<title>Formularz rejestracyjny</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    .form-group .error-message {
+        color: red;
+        font-size: 0.9em;
+        display: none;
+    }
+    #address-communication {
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+    <form id="registrationForm" novalidate>
+        <div class="form-group">
+            <label for="firstName">Imię:</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <div class="error-message" id="firstNameError">To pole jest wymagane.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Nazwisko:</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <div class="error-message" id="lastNameError">To pole jest wymagane.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error-message" id="emailError">Proszę podać poprawny adres email.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" name="password" minlength="8" required>
+            <div class="error-message" id="passwordError">Hasło musi mieć co najmniej 8 znaków.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Powtórz hasło:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <div class="error-message" id="confirmPasswordError">Hasła muszą się zgadzać.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Płeć:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Wybierz</option>
+                <option value="male">Mężczyzna</option>
+                <option value="female">Kobieta</option>
+                <option value="other">Inna</option>
+            </select>
+            <div class="error-message" id="genderError">To pole jest wymagane.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Telefon:</label>
+            <input type="text" id="phone" name="phone" required>
+            <div class="error-message" id="phoneError">To pole jest wymagane.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="birthDate">Data Urodzenia:</label>
+            <input type="date" id="birthDate" name="birthDate" required>
+            <div class="error-message" id="birthDateError">Musisz być pełnoletni.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="country">Kraj:</label>
+            <select id="country" name="country" required>
+                <option value="">Wybierz</option>
+                <option value="Polska">Polska</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <!-- Dodaj więcej opcji w razie potrzeby -->
+            </select>
+            <div class="error-message" id="countryError">To pole jest wymagane.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="state">Województwo:</label>
+            <select id="state" name="state" disabled>
+                <option value="">Wybierz</option>
+                <option value="Mazowieckie">Mazowieckie</option>
+                <option value="Małopolskie">Małopolskie</option>
+                <option value="Podkarpackie">Podkarpackie</option>
+                <option value="Opolskie">Opolskie</option>
+                <option value="Pomorskie">Pomorskie</option>
+                <option value="Wielkopolskie">Wielkopolskie</option>
+                <option value="Inne">Inne</option>
+            </select>
+            <div class="error-message" id="stateError">To pole jest wymagane.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Adres zamieszkania:</label>
+            <input type="text" id="address" name="address" disabled>
+            <div class="error-message" id="addressError">To pole jest wymagane.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="checkbox" id="sameAsAddress" name="sameAsAddress" checked>
+            <label for="sameAsAddress">Adres korespondencyjny jest taki sam jak adres zamieszkania</label>
+        </div>
+
+        <div class="form-group" id="address-communication">
+            <label for="communicationAddress">Adres korespondencyjny:</label>
+            <input type="text" id="communicationAddress" name="communicationAddress" disabled>
+            <div class="error-message" id="communicationAddressError">To pole jest wymagane.</div>
+        </div>
+
+        <button type="submit">Zapisz</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    validateForm();
+});
+
+document.getElementById('sameAsAddress').addEventListener('change', function() {
+    const communicationAddress = document.getElementById('address-communication');
+    if (this.checked) {
+        communicationAddress.style.display = 'none';
+        document.getElementById('communicationAddress').disabled = true;
+    } else {
+        communicationAddress.style.display = 'block';
+        document.getElementById('communicationAddress').disabled = false;
+    }
+});
+
+document.getElementById('country').addEventListener('change', function() {
+    const state = document.getElementById('state');
+    if (this.value === 'Polska') {
+        state.disabled = false;
+    } else {
+        state.disabled = true;
+    }
+});
+
+document.getElementById('state').addEventListener('change', function() {
+    const address = document.getElementById('address');
+    const communicationAddress = document.getElementById('communicationAddress');
+    if (this.value !== '') {
+        address.disabled = false;
+        communicationAddress.disabled = !document.getElementById('sameAsAddress').checked;
+    } else {
+        address.disabled = true;
+        communicationAddress.disabled = true;
+    }
+});
+
+document.getElementById('phone').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '');
+});
+
+function validateForm() {
+    let isValid = true;
+
+    const firstName = document.getElementById('firstName');
+    if (!firstName.value.trim()) {
+        setError(firstName, 'firstNameError', 'To pole jest wymagane.');
+        isValid = false;
+    } else {
+        clearError(firstName, 'firstNameError');
+    }
+
+    const lastName = document.getElementById('lastName');
+    if (!lastName.value.trim()) {
+        setError(lastName, 'lastNameError', 'To pole jest wymagane.');
+        isValid = false;
+    } else {
+        clearError(lastName, 'lastNameError');
+    }
+
+    const email = document.getElementById('email');
+    if (!validateEmail(email.value.trim())) {
+        setError(email, 'emailError', 'Proszę podać poprawny adres email.');
+        isValid = false;
+    } else {
+        clearError(email, 'emailError');
+    }
+
+    const password = document.getElementById('password');
+    if (password.value.length < 8) {
+        setError(password, 'passwordError', 'Hasło musi mieć co najmniej 8 znaków.');
+        isValid = false;
+    } else {
+        clearError(password, 'passwordError');
+    }
+
+    const confirmPassword = document.getElementById('confirmPassword');
+    if (confirmPassword.value !== password.value) {
+        setError(confirmPassword, 'confirmPasswordError', 'Hasła muszą się zgadzać.');
+        isValid = false;
+    } else {
+        clearError(confirmPassword, 'confirmPasswordError');
+    }
+
+    const birthDate = document.getElementById('birthDate');
+    if (!validateBirthDate(birthDate.value)) {
+        setError(birthDate, 'birthDateError', 'Musisz być pełnoletni.');
+        isValid = false;
+    } else {
+        clearError(birthDate, 'birthDateError');
+    }
+
+    if (isValid) {
+        alert('Formularz został poprawnie wypełniony.');
+    }
+}
+
+function setError(element, errorElementId, message) {
+    document.getElementById(errorElementId).textContent = message;
+    document.getElementById(errorElementId).style.display = 'block';
+    element.setCustomValidity(message);
+}
+
+function clearError(element, errorElementId) {
+    document.getElementById(errorElementId).style.display = 'none';
+    element.setCustomValidity('');
+}
+
+function validateEmail(email) {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(email);
+}
+
+function validateBirthDate(date) {
+    const birthDate = new Date(date);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    return age > 18 || (age === 18 && m >= 0 && today.getDate() >= birthDate.getDate());
+}
+</script>
+
+</body>
+</html>
